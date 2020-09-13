@@ -1,8 +1,8 @@
 package com.tank.ognl.script;
 
-import com.tank.ognl.entity.Person;
-import com.tank.ognl.entity.Student;
-import com.tank.ognl.entity.Teacher;
+import com.tank.common.entity.Person;
+import com.tank.common.entity.Student;
+import com.tank.common.entity.Teacher;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;

@@ -1,4 +1,4 @@
-package com.tank.ognl.entity;
+package com.tank.common.entity;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Getter;

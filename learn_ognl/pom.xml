@@ -18,5 +18,10 @@
             <groupId>ognl</groupId>
             <artifactId>ognl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.tank.common</groupId>
+            <artifactId>sharing</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

@@ -21,6 +21,7 @@
         <ognl.version>3.2.14</ognl.version>
         <hutool.version>5.3.9</hutool.version>
         <guava.version>23.0</guava.version>
+        <javassist.version>3.24.1-GA</javassist.version>
     </properties>
 
     <dependencies>
@@ -55,11 +56,17 @@
                 <version>${ognl.version}</version>
                 <type>jar</type>
             </dependency>
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>${javassist.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <modules>
         <module>learn_clazz</module>
         <module>learn_ognl</module>
+        <module>sharing</module>
     </modules>
 </project>

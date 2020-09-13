@@ -1,4 +1,4 @@
-package com.tank.ognl.entity;
+package com.tank.common.entity;
 
 /**
  * @author tank198435163.com

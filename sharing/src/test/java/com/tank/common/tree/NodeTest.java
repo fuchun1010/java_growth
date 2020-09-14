@@ -5,6 +5,8 @@ import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class NodeTest {
 
   @Before
@@ -19,22 +21,22 @@ public class NodeTest {
     this.root.addChild(szpszx);
     szpszx.addChild(jack);
     jack.addChild(store_0001);
-    //szpszx.addChild(lee);
 
     Node<Organization> gzpszx = new Node<>(new Organization("广州配送中心", "szpszx"));
     Node<Organization> king = new Node<>(new Organization("king片区", "king_0001"));
-    //Node<Organization> kite = new Node<>(new Organization("kite片区", "kite_0001"));
     Leaf<Organization> store_0002 = new Leaf<>(new Organization("广州天河店", "s0002"));
 
     this.root.addChild(gzpszx);
     gzpszx.addChild(king);
     king.addChild(store_0002);
-    //gzpszx.addChild(kite);
   }
 
   @Test
-  public void addChild() {
-
+  public void parentPath() {
+    val target = new Organization("king片区", "king_0001");
+    val store_0002 = new Organization("广州天河店", "s0002");
+    List<Organization> result = this.root.parentPath(store_0002);
+    System.out.println(result);
   }
 
   @Test

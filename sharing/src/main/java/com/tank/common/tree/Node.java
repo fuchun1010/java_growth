@@ -25,6 +25,47 @@ public class Node<T> implements TreeNode<T> {
     this.print(this);
   }
 
+  public List<T> parentPath(@NonNull final T target) {
+    return parentPath(target, this, Lists.<T>newArrayList());
+  }
+
+  private List<T> parentPath(@NonNull final T target,
+                             @NonNull final Node<T> root,
+                             @NonNull final List<T> path) {
+
+    path.add(root.data());
+
+    if (root.data().equals(target)) {
+      path.add(root.data());
+      return path;
+    }
+
+    for (TreeNode<T> child : root.getChildren()) {
+
+      if (child.data().equals(target)) {
+        path.add(child.data());
+        return path;
+      }
+
+      val isNode = child instanceof Node;
+
+      if (isNode) {
+        final Node<T> tmpNode = ((Node<T>) child);
+        val result = parentPath(target, tmpNode, path);
+        if (!result.isEmpty()) {
+          if (result.contains(target)) {
+            return path;
+          }
+          val tailIndex = result.size() - 1;
+          result.remove(tailIndex);
+        }
+      }
+
+    }
+
+    return path;
+  }
+
   public TreeNode<T> find(@NonNull final T target) {
     return this.find(target, this);
   }

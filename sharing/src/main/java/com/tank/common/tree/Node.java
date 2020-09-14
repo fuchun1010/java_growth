@@ -22,15 +22,14 @@ public class Node<T extends Comparator<T>> implements TreeNode {
   }
 
   public void print() {
-    System.out.println(this.toString());
     this.print(this);
   }
 
   private void print(@NonNull final Node<T> node) {
-
+    System.out.println(node.toString());
     for (TreeNode child : node.getChildren()) {
-      System.out.println(child.toString());
       if (child instanceof Leaf) {
+        System.out.println(child.toString());
         continue;
       }
       final Node<T> tmp = ((Node<T>) child);

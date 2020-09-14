@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @param <T>
@@ -16,12 +17,37 @@ import java.util.List;
 @Accessors(chain = true)
 public class Node<T> implements TreeNode<T> {
 
-  public void addChild(@NonNull final TreeNode treeNode) {
+  public void addChild(@NonNull final TreeNode<T> treeNode) {
     this.children.add(treeNode);
   }
 
   public void print() {
     this.print(this);
+  }
+
+  public TreeNode<T> find(@NonNull final T target) {
+    return this.find(target, this);
+  }
+
+  private TreeNode<T> find(@NonNull final T target, @NonNull final Node<T> root) {
+    if (root.data().equals(target)) {
+      return root;
+    }
+
+    for (TreeNode<T> child : root.getChildren()) {
+      if (child.data().equals(target)) {
+        return child;
+      }
+      if (child instanceof Node) {
+        final Node<T> tmpNode = ((Node<T>) child);
+        TreeNode<T> result = this.find(target, tmpNode);
+        if (Objects.nonNull(result)) {
+          return result;
+        }
+      }
+    }
+
+    return null;
   }
 
   private void print(@NonNull final Node<T> node) {

@@ -1,6 +1,7 @@
 package com.tank.common.tree;
 
 import com.tank.common.entity.Organization;
+import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,6 +35,16 @@ public class NodeTest {
   @Test
   public void addChild() {
 
+  }
+
+  @Test
+  public void testFind() {
+    val target = new Organization("king片区", "king_0001");
+    val node = this.root.find(target);
+    if (node instanceof Node) {
+      val tmpNode = ((Node<Organization>) node);
+      System.out.println(tmpNode);
+    }
   }
 
   @Test

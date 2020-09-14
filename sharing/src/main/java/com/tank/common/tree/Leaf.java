@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.Comparator;
-
 /**
  * @param <T>
  * @author tank198435163.com
@@ -18,13 +16,18 @@ import java.util.Comparator;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Leaf<T extends Comparator<T>> implements TreeNode {
+public class Leaf<T> implements TreeNode<T> {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("Leaf", this.data.toString()).toString();
+    return MoreObjects.toStringHelper(this).add("Leaf", this.data().toString()).toString();
   }
 
-  @Getter
+  @Setter
   private T data;
+
+  @Override
+  public T data() {
+    return this.data;
+  }
 }

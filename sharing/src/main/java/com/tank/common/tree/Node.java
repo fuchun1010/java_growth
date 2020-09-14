@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class Node<T extends Comparator<T>> implements TreeNode {
+public class Node<T> implements TreeNode<T> {
 
   public void addChild(@NonNull final TreeNode treeNode) {
     this.children.add(treeNode);
@@ -27,7 +26,7 @@ public class Node<T extends Comparator<T>> implements TreeNode {
 
   private void print(@NonNull final Node<T> node) {
     System.out.println(node.toString());
-    for (TreeNode child : node.getChildren()) {
+    for (TreeNode<T> child : node.getChildren()) {
       if (child instanceof Leaf) {
         System.out.println(child.toString());
         continue;
@@ -39,7 +38,7 @@ public class Node<T extends Comparator<T>> implements TreeNode {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("node", this.getData().toString()).toString();
+    return MoreObjects.toStringHelper(this).add("node", this.data().toString()).toString();
   }
 
   public boolean isEmpty() {
@@ -47,9 +46,13 @@ public class Node<T extends Comparator<T>> implements TreeNode {
   }
 
   @Getter
-  private final List<TreeNode> children = Lists.newArrayList();
+  private final List<TreeNode<T>> children = Lists.newArrayList();
 
-  @Getter
   @Setter
   private T data;
+
+  @Override
+  public T data() {
+    return this.data;
+  }
 }

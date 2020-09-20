@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -54,9 +55,7 @@ public class NioServer {
           String value = new String(buffer);
           System.out.println(StrUtil.format("server received :[{}]", value));
           if ("quit".equalsIgnoreCase(value)) {
-            channel.shutdownInput();
-            channel.shutdownOutput();
-            channel.close();
+            closeChannel(channel);
           } else {
             channel.register(selector, SelectionKey.OP_WRITE, ByteBuffer.wrap(buffer));
           }
@@ -72,9 +71,16 @@ public class NioServer {
     }
   }
 
+  private void closeChannel(SocketChannel channel) throws IOException {
+    channel.shutdownInput();
+    channel.shutdownOutput();
+    channel.close();
+  }
+
   public void stop() {
     this.running.set(false);
   }
+
 
   @SneakyThrows
   private ServerSocketChannel createServerSocketChannel() {

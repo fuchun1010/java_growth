@@ -79,5 +79,6 @@
         <module>learn_clazz</module>
         <module>learn_ognl</module>
         <module>sharing</module>
+        <module>learn_nio</module>
     </modules>
 </project>

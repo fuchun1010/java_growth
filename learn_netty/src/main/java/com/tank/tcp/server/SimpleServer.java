@@ -2,10 +2,9 @@ package com.tank.tcp.server;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
+import com.tank.tcp.handler.server.WelComeHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -39,13 +38,7 @@ public class SimpleServer {
                 @Override
                 protected void initChannel(final NioSocketChannel nioSocketChannel) throws Exception {
                   nioSocketChannel.pipeline().addLast(new StringDecoder());
-                  nioSocketChannel.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
-                    @Override
-                    protected void channelRead0(final ChannelHandlerContext channelHandlerContext,
-                                                final String str) throws Exception {
-                      System.out.println(StrUtil.format("server received: [{}]", str));
-                    }
-                  });
+                  nioSocketChannel.pipeline().addLast(new WelComeHandler());
                 }
               })
               .bind(this.port)
@@ -55,6 +48,7 @@ public class SimpleServer {
                   System.out.println(StrUtil.format("server Thread:[{}] success listen port:[{}]",
                           Thread.currentThread().getName(),
                           this.port));
+
                 }
               });
     } catch (Exception e) {

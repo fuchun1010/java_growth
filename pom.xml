@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tank.clazz</groupId>
     <artifactId>java_growth</artifactId>
@@ -22,6 +23,7 @@
         <guava.version>23.0</guava.version>
         <javassist.version>3.24.1-GA</javassist.version>
         <vavr.io.version>0.10.2</vavr.io.version>
+        <netty.version>4.1.53.Final</netty.version>
     </properties>
 
     <dependencies>
@@ -71,6 +73,12 @@
                 <artifactId>javassist</artifactId>
                 <version>${javassist.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+                <type>jar</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -79,6 +87,6 @@
         <module>learn_ognl</module>
         <module>sharing</module>
         <module>learn_nio</module>
-    <module>learn_netty</module>
-  </modules>
+        <module>learn_netty</module>
+    </modules>
 </project>

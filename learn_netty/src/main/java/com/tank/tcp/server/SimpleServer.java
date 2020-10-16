@@ -56,7 +56,6 @@ public class SimpleServer {
                           Thread.currentThread().getName(),
                           this.port));
                 }
-
               });
     } catch (Exception e) {
       e.printStackTrace();

@@ -11,8 +11,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringEncoder;
 import lombok.val;
 
-import java.util.Arrays;
-
 /**
  * @author tank198435163.com
  */
@@ -34,9 +32,9 @@ public class SimpleClient {
             .connect("localhost", 9000)
             .addListener(future -> {
               if (future.isSuccess()) {
-                System.out.println("args = " + Arrays.deepToString(args));
+                System.out.println("connect server success");
               } else {
-                System.out.println("failure");
+                System.out.println("connect server failure");
               }
             })
             .channel()

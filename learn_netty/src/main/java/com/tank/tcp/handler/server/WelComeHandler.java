@@ -65,7 +65,7 @@ public class WelComeHandler extends ChannelInboundHandlerAdapter {
     if (msg instanceof ByteBuf) {
       final ByteBuf byteBuf = ((ByteBuf) msg);
       byte[] data = this.convertFrom(byteBuf);
-      System.out.println(StrUtil.format("from client data:[{}]", new String(data, StandardCharsets.UTF_8)));
+      System.out.println(StrUtil.format("from client data: {}", new String(data, StandardCharsets.UTF_8)));
     }
   }
 

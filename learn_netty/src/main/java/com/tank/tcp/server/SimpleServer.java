@@ -17,9 +17,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @author tank198435163.com
  */
-
 public class SimpleServer {
-
 
   public SimpleServer() {
     this(9000);
@@ -33,27 +31,33 @@ public class SimpleServer {
 
   public void start() {
     try {
-      this.serverBootstrap
+      val channelFuture = this.serverBootstrap
               .channel(NioServerSocketChannel.class)
               .childHandler(new ChannelInitializer<NioSocketChannel>() {
                 @Override
                 protected void initChannel(final NioSocketChannel nioSocketChannel) throws Exception {
-                  //nioSocketChannel.pipeline().addLast(new StringDecoder());
+                  nioSocketChannel.pipeline().addLast(new StringDecoder());
                   nioSocketChannel.pipeline().addLast(new WelComeHandler());
                 }
               })
               .bind(this.port)
-              .sync()
-              .addListener(result -> {
-                if (result.isSuccess()) {
-                  System.out.println(StrUtil.format("server Thread:[{}] success listen port:[{}]",
-                          Thread.currentThread().getName(),
-                          this.port));
+              .sync();
 
-                }
-              });
+      channelFuture.addListener(result -> {
+        if (result.isSuccess()) {
+          val tips = StrUtil.format("server Thread:[{}] success listen port:[{}]",
+                  Thread.currentThread().getName(),
+                  this.port);
+          System.out.println(tips);
+
+        }
+      });
+
+      channelFuture.channel().closeFuture().sync();
+
     } catch (Exception e) {
       e.printStackTrace();
+    } finally {
       this.boss.shutdownGracefully();
       this.worker.shutdownGracefully();
     }

@@ -20,6 +20,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class SimpleServer {
 
+
   public SimpleServer() {
     this(9000);
   }
@@ -37,7 +38,7 @@ public class SimpleServer {
               .childHandler(new ChannelInitializer<NioSocketChannel>() {
                 @Override
                 protected void initChannel(final NioSocketChannel nioSocketChannel) throws Exception {
-                  nioSocketChannel.pipeline().addLast(new StringDecoder());
+                  //nioSocketChannel.pipeline().addLast(new StringDecoder());
                   nioSocketChannel.pipeline().addLast(new WelComeHandler());
                 }
               })
@@ -53,20 +54,26 @@ public class SimpleServer {
               });
     } catch (Exception e) {
       e.printStackTrace();
+      this.boss.shutdownGracefully();
+      this.worker.shutdownGracefully();
     }
 
   }
 
   private ServerBootstrap initServerBootStrap() {
     val serverBootstrap = new ServerBootstrap();
-    val boss = new NioEventLoopGroup();
-    val worker = new NioEventLoopGroup();
+    this.boss = new NioEventLoopGroup();
+    this.worker = new NioEventLoopGroup();
     return serverBootstrap.group(boss, worker);
   }
 
   private final ServerBootstrap serverBootstrap;
 
   private final Integer port;
+
+  private NioEventLoopGroup boss;
+
+  private NioEventLoopGroup worker;
 
   private final CountDownLatch running = new CountDownLatch(1);
 }

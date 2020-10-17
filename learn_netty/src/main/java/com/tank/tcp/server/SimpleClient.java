@@ -40,7 +40,7 @@ public class SimpleClient {
               }
             })
             .channel()
-            .writeAndFlush(StrUtil.format("date:[{}]", DateUtil.now()))
+            .writeAndFlush(StrUtil.format("date is :", DateUtil.now()))
             .addListener(future -> {
               if (future.isSuccess()) {
                 System.out.println("write to server success");

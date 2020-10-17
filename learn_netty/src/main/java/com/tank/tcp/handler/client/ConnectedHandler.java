@@ -16,7 +16,11 @@ public class ConnectedHandler extends ChannelInboundHandlerAdapter {
   public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
     if (msg instanceof ByteBuf) {
       final ByteBuf message = ((ByteBuf) msg);
-      System.out.println(StrUtil.format("from server:[{}]", message.toString(StandardCharsets.UTF_8)));
+      final byte[] data = new byte[message.readableBytes()];
+      message.readBytes(data);
+      System.out.println(StrUtil.format("received from server:[{}]", new String(data, StandardCharsets.UTF_8)));
+      message.release();
     }
+
   }
 }

@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.tank.tcp.protocol.Packet;
 import com.tank.tcp.util.Command;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import lombok.val;
@@ -33,7 +32,11 @@ public class ObjectDecoder extends MessageToMessageDecoder<ByteBuf> {
     //skip version field
     msg.skipBytes(4);
 
+    //read command
+    int command = msg.readInt();
     Packet packet = Packet.instance();
+    packet.setCommand(command);
+
     val dataLength = msg.readInt();
     //continue read util data is full
     for (; ; ) {
@@ -45,7 +48,8 @@ public class ObjectDecoder extends MessageToMessageDecoder<ByteBuf> {
     }
     final byte[] data = new byte[dataLength];
     msg.readBytes(data);
-    val resultOpt = packet.decode(ByteBufAllocator.DEFAULT.buffer().writeBytes(data));
+    packet.setData(data);
+    val resultOpt = packet.decode();
     if (resultOpt.isPresent()) {
       out.add(resultOpt.get());
     } else {

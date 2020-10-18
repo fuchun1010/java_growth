@@ -28,6 +28,7 @@ public class Codec {
     @Cleanup val bytesOut = new ByteArrayOutputStream();
     @Cleanup val out = new ObjectOutputStream(bytesOut);
     out.writeObject(data);
+    out.flush();
     return bytesOut.toByteArray();
   }
 

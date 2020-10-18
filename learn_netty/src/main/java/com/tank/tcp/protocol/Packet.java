@@ -42,7 +42,7 @@ public final class Packet implements Serializable {
 
   @Transient
   @SuppressWarnings("unchecked")
-  public <T extends Serializable> Optional<T> decode(@NonNull final ByteBuf byteBuf) throws Exception {
+  public <T extends Serializable> Optional<T> decode() throws Exception {
     val clazz = this.fetchClazz();
     return this.deSerial(this.data, clazz);
   }
@@ -51,18 +51,18 @@ public final class Packet implements Serializable {
     this.register();
   }
 
-  @Transient
-  @SuppressWarnings("unchecked")
-  private <T extends Serializable> T parse2Packet(@NonNull final ByteBuf byteBuf) throws Exception {
-    val packetArrayLength = byteBuf.readableBytes();
-    val data = new byte[packetArrayLength];
-    byteBuf.readBytes(data);
-    val packetOpt = this.<T>deSerial(data, this.fetchClazz());
-    if (!packetOpt.isPresent()) {
-      throw new Exception("xxxx");
-    }
-    return (T) packetOpt.get();
-  }
+//  @Transient
+//  @SuppressWarnings("unchecked")
+//  private <T extends Serializable> T parse2Packet(@NonNull final ByteBuf byteBuf) throws Exception {
+//    val packetArrayLength = byteBuf.readableBytes();
+//    val data = new byte[packetArrayLength];
+//    byteBuf.readBytes(data);
+//    val packetOpt = this.<T>deSerial(data, this.fetchClazz());
+//    if (!packetOpt.isPresent()) {
+//      throw new Exception("xxxx");
+//    }
+//    return (T) packetOpt.get();
+//  }
 
 
   @Transient
@@ -88,10 +88,10 @@ public final class Packet implements Serializable {
     return this.commandMapping.get(this.command);
   }
 
-  @Transient
-  public boolean isEmptyCommand() {
-    return command == 0;
-  }
+//  @Transient
+//  public boolean isEmptyCommand() {
+//    return command == 0;
+//  }
 
   @Getter
   @Setter

@@ -41,7 +41,8 @@ public class CodecTest {
     val buff = packet.encode();
     buff.readInt();
     buff.skipBytes(12);
-    val resultOpt = Packet.instance().decode(buff);
+    //TODO some bug
+    val resultOpt = Packet.instance().decode();
     Assert.assertTrue(resultOpt.isPresent());
     Assert.assertTrue(resultOpt.get() instanceof Customer);
     final Customer customer = (Customer) resultOpt.get();

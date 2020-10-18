@@ -2,13 +2,13 @@ package com.tank.tcp.server;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
-import com.tank.tcp.handler.server.WelComeHandler;
+import com.tank.tcp.codec.ObjectDecoder;
+import com.tank.tcp.handler.server.LoginHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
 import lombok.NonNull;
 import lombok.val;
 
@@ -35,9 +35,9 @@ public class SimpleServer {
               .channel(NioServerSocketChannel.class)
               .childHandler(new ChannelInitializer<NioSocketChannel>() {
                 @Override
-                protected void initChannel(final NioSocketChannel nioSocketChannel) throws Exception {
-                  nioSocketChannel.pipeline().addLast(new StringDecoder());
-                  nioSocketChannel.pipeline().addLast(new WelComeHandler());
+                protected void initChannel(final NioSocketChannel channel) throws Exception {
+                  channel.pipeline().addLast(new ObjectDecoder());
+                  channel.pipeline().addLast(new LoginHandler());
                 }
               })
               .bind(this.port)

@@ -18,27 +18,20 @@ public class ObjectDecoder extends MessageToMessageDecoder<ByteBuf> {
   @Override
   protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
     val packet = Packet.instance();
-
     if (in.readableBytes() < BASIC_LENGTH) {
       return;
     }
-    int beginIndex = -1;
-    while (true) {
-      if (in.readInt() == MAGIC) {
-        in.markReaderIndex();
-        break;
-      }
-      in.readInt();
-      if (in.readableBytes() < BASIC_LENGTH) {
-        return;
-      }
+    in.markReaderIndex();
+    if (in.readInt() != MAGIC) {
+      System.out.println("非本系统协议");
+      ctx.channel().close();
+      in.resetReaderIndex();
     }
 
     //skip version
     if (in.readableBytes() >= packet.minRemainingBytes()) {
       in.skipBytes(4);
     } else {
-
       return;
     }
 

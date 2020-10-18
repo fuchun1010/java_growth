@@ -3,7 +3,7 @@ package com.tank.tcp.protocol;
 import com.google.common.collect.Maps;
 import com.tank.tcp.util.Command;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import lombok.*;
 
 import java.beans.Transient;
@@ -27,7 +27,7 @@ public final class Packet implements Serializable {
 
   @Transient
   public <T extends Serializable> ByteBuf encode() {
-    val byteBuff = ByteBufAllocator.DEFAULT.buffer();
+    val byteBuff = Unpooled.buffer();
     //magic(int) + version(int) + command(int) + dataLength(int) + data(bytes) + end(bytes)
     byteBuff.writeInt(Command.MAGIC);
     byteBuff.writeInt(1);

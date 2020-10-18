@@ -1,6 +1,8 @@
 package com.tank.tcp.util;
 
 import com.tank.tcp.protocol.Customer;
+import com.tank.tcp.protocol.Packet;
+import io.netty.buffer.ByteBufAllocator;
 import lombok.val;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,11 +34,35 @@ public class CodecTest {
     System.out.println(result.length);
   }
 
+  @Test
+  public void test2ByteBuff() throws Exception {
+    //magic(int) + version(int) + command(int) + dataLength(int) + data(int)
+    val packet = Codec.toPacket(Command.LOGIN, Codec.toObjectBytes(this.customer));
+    val buff = packet.encode();
+    buff.readInt();
+    buff.skipBytes(12);
+    val resultOpt = Packet.instance().decode(buff);
+    Assert.assertTrue(resultOpt.isPresent());
+    Assert.assertTrue(resultOpt.get() instanceof Customer);
+    final Customer customer = (Customer) resultOpt.get();
+    Assert.assertEquals(customer.getPassword(), this.customer.getPassword());
+  }
+
+  @Test
+  public void testReadInt() {
+    val buff = ByteBufAllocator.DEFAULT.buffer(4);
+    buff.writeInt(4);
+    val result = buff.readInt();
+    System.out.println(result);
+  }
+
+
   @Before
   public void init() {
     this.customer = new Customer();
     this.customer.setUsername("jack").setPassword("123456");
   }
+
 
   private Customer customer;
 }

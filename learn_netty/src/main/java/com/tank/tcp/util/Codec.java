@@ -19,7 +19,6 @@ public class Codec {
   public static Packet toPacket(@NonNull final int command, @NonNull final byte[] data) {
     val packet = Packet.instance();
     packet.setCommand(command);
-    packet.setLength(data.length);
     packet.setData(data);
     return packet;
   }

@@ -5,6 +5,8 @@ package com.tank.tcp.util;
  */
 public interface Command {
 
-  int LOGIN = 0x0001;
+  int MAGIC = 10;
+
+  int LOGIN = 1;
 
 }

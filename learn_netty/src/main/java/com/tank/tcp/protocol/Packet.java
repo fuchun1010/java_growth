@@ -1,9 +1,9 @@
 package com.tank.tcp.protocol;
 
 import com.google.common.collect.Maps;
+import com.tank.tcp.util.Command;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import io.vavr.Function2;
 import lombok.*;
 
 import java.beans.Transient;
@@ -17,38 +17,34 @@ import java.util.Optional;
 /**
  * @author tank198435163.com
  */
-public final class Packet implements Serializable, Cloneable {
+public final class Packet implements Serializable {
 
   public static Packet instance() {
     return INSTANCE;
   }
 
   @Transient
-  public ByteBuf encode() {
+  public <T extends Serializable> ByteBuf encode() {
     val byteBuff = ByteBufAllocator.DEFAULT.buffer();
-    byteBuff.writeInt(this.magic);
-    byteBuff.writeInt(this.version);
-    byteBuff.writeInt(this.command);
-    byteBuff.writeInt(this.length);
+    //magic(int) + version(int) + command(int) + dataLength(int) + data(int)
+    byteBuff.writeInt(Command.MAGIC);
+    byteBuff.writeInt(1);
+    byteBuff.writeInt(command);
+    byteBuff.writeInt(this.data.length);
     byteBuff.writeBytes(this.data);
     return byteBuff;
   }
 
   @Transient
-  @SuppressWarnings("unchecked")
-  public <T extends Serializable> Optional<T> decode(@NonNull final ByteBuf byteBuf) throws Exception {
-    val packet = this.parse2Packet(byteBuf);
-    val clazz = this.commandMapping.get(packet.command);
-    return this.deSerial(packet.getData(), clazz);
+  public int minRemainingBytes() {
+    return 12;
   }
 
   @Transient
-
   @SuppressWarnings("unchecked")
-  public <T extends Serializable> Optional<T> decode(@NonNull final ByteBuf byteBuf, Function2<byte[], Class<T>, Optional<T>> deSerialFun) throws Exception {
-    val packetOpt = this.parse2Packet(byteBuf);
-    val clazz = this.commandMapping.get(packetOpt.command);
-    return deSerialFun.apply(packetOpt.getData(), clazz);
+  public <T extends Serializable> Optional<T> decode(@NonNull final ByteBuf byteBuf) throws Exception {
+    val clazz = this.fetchClazz();
+    return this.deSerial(this.data, clazz);
   }
 
   private Packet() {
@@ -56,15 +52,16 @@ public final class Packet implements Serializable, Cloneable {
   }
 
   @Transient
-  private Packet parse2Packet(@NonNull final ByteBuf byteBuf) throws Exception {
-    val packetArrayLength = byteBuf.readerIndex();
-    byte[] packetData = new byte[packetArrayLength];
-    byteBuf.readBytes(packetData);
-    val packetOpt = this.deSerial(packetData, Packet.class);
+  @SuppressWarnings("unchecked")
+  private <T extends Serializable> T parse2Packet(@NonNull final ByteBuf byteBuf) throws Exception {
+    val packetArrayLength = byteBuf.readableBytes();
+    val data = new byte[packetArrayLength];
+    byteBuf.readBytes(data);
+    val packetOpt = this.<T>deSerial(data, this.fetchClazz());
     if (!packetOpt.isPresent()) {
       throw new Exception("xxxx");
     }
-    return packetOpt.get();
+    return (T) packetOpt.get();
   }
 
 
@@ -85,7 +82,10 @@ public final class Packet implements Serializable, Cloneable {
   @Transient
   public void register() {
     this.commandMapping.put(1, Customer.class);
+  }
 
+  public Class fetchClazz() {
+    return this.commandMapping.get(this.command);
   }
 
   @Transient
@@ -93,17 +93,9 @@ public final class Packet implements Serializable, Cloneable {
     return command == 0;
   }
 
-  private final int magic = 0xfffff;
-
-  private final int version = 1;
-
   @Getter
   @Setter
   private int command;
-
-  @Getter
-  @Setter
-  private int length;
 
   @Getter
   @Setter

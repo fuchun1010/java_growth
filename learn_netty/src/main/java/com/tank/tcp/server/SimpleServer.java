@@ -5,14 +5,19 @@ import com.google.common.base.Preconditions;
 import com.tank.tcp.codec.ObjectDecoder;
 import com.tank.tcp.handler.server.LoginHandler;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import lombok.NonNull;
 import lombok.val;
 
 import java.util.concurrent.CountDownLatch;
+
+import static com.tank.tcp.util.Command.END;
+import static com.tank.tcp.util.Command.FIX_PACK_LENGTH;
 
 /**
  * @author tank198435163.com
@@ -36,6 +41,8 @@ public class SimpleServer {
               .childHandler(new ChannelInitializer<NioSocketChannel>() {
                 @Override
                 protected void initChannel(final NioSocketChannel channel) throws Exception {
+                  val delimiter = Unpooled.copiedBuffer(END.getBytes());
+                  channel.pipeline().addFirst(new DelimiterBasedFrameDecoder(FIX_PACK_LENGTH, delimiter));
                   channel.pipeline().addLast(new ObjectDecoder());
                   channel.pipeline().addLast(new LoginHandler());
                 }

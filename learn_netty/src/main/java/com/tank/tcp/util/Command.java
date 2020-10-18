@@ -9,4 +9,8 @@ public interface Command {
 
   int LOGIN = 1;
 
+  String END = "\r\n";
+
+  int FIX_PACK_LENGTH = 8192;
+
 }

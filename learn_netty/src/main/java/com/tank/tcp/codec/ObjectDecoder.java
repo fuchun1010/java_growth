@@ -1,8 +1,6 @@
 package com.tank.tcp.codec;
 
-import cn.hutool.core.util.StrUtil;
 import com.tank.tcp.protocol.Packet;
-import com.tank.tcp.util.Command;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
@@ -10,50 +8,55 @@ import lombok.val;
 
 import java.util.List;
 
+import static com.tank.tcp.util.Command.MAGIC;
+
 /**
  * @author tank198435163.com
  */
 public class ObjectDecoder extends MessageToMessageDecoder<ByteBuf> {
 
   @Override
-  protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
-    val magic = msg.readInt();
-    if (magic != Command.MAGIC) {
-      System.out.println("非系统数据不接收");
-      ctx.channel().close();
+  protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+    val packet = Packet.instance();
+
+    if (in.readableBytes() < BASIC_LENGTH) {
+      return;
     }
-    // confirm enough bytes to read
-    //next int version  int dataLength => 2 * 4
-    for (; ; ) {
-      if (msg.readableBytes() > Packet.instance().minRemainingBytes()) {
+    int beginIndex = -1;
+    while (true) {
+      if (in.readInt() == MAGIC) {
+        in.markReaderIndex();
         break;
       }
+      in.readInt();
+      if (in.readableBytes() < BASIC_LENGTH) {
+        return;
+      }
     }
-    //skip version field
-    msg.skipBytes(4);
 
-    //read command
-    int command = msg.readInt();
-    Packet packet = Packet.instance();
+    //skip version
+    if (in.readableBytes() >= packet.minRemainingBytes()) {
+      in.skipBytes(4);
+    } else {
+
+      return;
+    }
+
+    val command = in.readInt();
     packet.setCommand(command);
 
-    val dataLength = msg.readInt();
-    //continue read util data is full
-    for (; ; ) {
-      if (msg.readableBytes() >= dataLength) {
-        break;
-      } else {
-        System.out.println("not enough bytes");
-      }
-    }
+    val dataLength = in.readInt();
     final byte[] data = new byte[dataLength];
-    msg.readBytes(data);
+    in.readBytes(data);
+
     packet.setData(data);
+
     val resultOpt = packet.decode();
-    if (resultOpt.isPresent()) {
-      out.add(resultOpt.get());
-    } else {
-      throw new IllegalArgumentException(StrUtil.format("command [{}] not supported", packet.getCommand()));
-    }
+    resultOpt.ifPresent(out::add);
+
+    in.resetReaderIndex();
+
   }
+
+  private final int BASIC_LENGTH = 4;
 }

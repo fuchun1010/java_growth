@@ -48,12 +48,17 @@ public class SimpleClient {
               }
             });
 
-    connectFuture.channel().writeAndFlush(packet).addListener(future -> {
-      if (future.isSuccess()) {
-        System.out.println("write ok");
-      } else {
-        System.out.println("write failure");
-      }
-    });
+
+    while (true) {
+      connectFuture.channel().writeAndFlush(packet).addListener(future -> {
+        if (future.isSuccess()) {
+          System.out.println("write ok");
+        } else {
+          System.out.println("write failure");
+        }
+      });
+    }
+
+
   }
 }

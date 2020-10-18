@@ -14,6 +14,8 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.tank.tcp.util.Command.END;
+
 /**
  * @author tank198435163.com
  */
@@ -26,12 +28,13 @@ public final class Packet implements Serializable {
   @Transient
   public <T extends Serializable> ByteBuf encode() {
     val byteBuff = ByteBufAllocator.DEFAULT.buffer();
-    //magic(int) + version(int) + command(int) + dataLength(int) + data(int)
+    //magic(int) + version(int) + command(int) + dataLength(int) + data(bytes) + end(bytes)
     byteBuff.writeInt(Command.MAGIC);
     byteBuff.writeInt(1);
     byteBuff.writeInt(command);
     byteBuff.writeInt(this.data.length);
     byteBuff.writeBytes(this.data);
+    byteBuff.writeBytes(END.getBytes());
     return byteBuff;
   }
 

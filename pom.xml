@@ -88,5 +88,6 @@
         <module>sharing</module>
         <module>learn_nio</module>
         <module>learn_netty</module>
+        <module>learn_dp</module>
     </modules>
 </project>

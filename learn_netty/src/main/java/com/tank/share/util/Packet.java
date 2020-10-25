@@ -1,4 +1,4 @@
-package com.tank.share;
+package com.tank.share.util;
 
 import lombok.AccessLevel;
 import lombok.Getter;

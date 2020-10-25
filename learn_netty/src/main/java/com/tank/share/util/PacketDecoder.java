@@ -15,7 +15,8 @@ public class PacketDecoder extends LengthFieldBasedFrameDecoder {
 
   @Override
   protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+    //TODO check magic number
     return super.decode(ctx, in);
   }
-  
+
 }

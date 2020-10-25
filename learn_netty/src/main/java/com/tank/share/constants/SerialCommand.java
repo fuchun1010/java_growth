@@ -1,5 +1,6 @@
 package com.tank.share.constants;
 
+import lombok.Getter;
 import lombok.NonNull;
 
 /**
@@ -14,7 +15,9 @@ public enum SerialCommand {
     this.desc = desc;
   }
 
+  @Getter
   private Integer command;
 
+  @Getter
   private String desc;
 }

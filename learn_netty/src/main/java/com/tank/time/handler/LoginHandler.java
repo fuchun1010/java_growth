@@ -22,7 +22,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<LoginReq> {
       val packet = new Packet();
       packet.setMessageType(MessageType.HELLO_RES.getType());
       packet.setData("hello,client".getBytes());
-      packet.setCommandType(SerialCommand.defaultSerialCommandValue());
+      packet.setCommandType(SerialCommand.defaultSerialCommandValue().getCommand());
       packet.setDataLength(packet.getData().length);
       ctx.writeAndFlush(packet);
     } else {

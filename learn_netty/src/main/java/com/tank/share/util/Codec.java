@@ -1,44 +1,57 @@
 package com.tank.share.util;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.google.common.collect.Maps;
 import com.tank.share.constants.SerialCommand;
+import io.vavr.Function1;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.tank.share.constants.SerialCommand.JOSN;
 
 /**
- * @param <T>
  * @author tank198435163.com
  */
 public class Codec {
 
   @SneakyThrows
-  public <T> byte[] serial(SerialCommand serialCommand,
-                           @NonNull final T data) {
-//    val serialFun = this.serialCommands.get(serialCommand);
-//    if (Objects.isNull(serialFun)) {
-//      throw new IllegalAccessException(StrUtil.format(" [{}] serial not supported", serialCommand.getDesc()));
-//    }
-//    val result = serialFun.apply(data);
-//    this.serialCommands.clear(); //save some memory
-//    return result;
-    return null;
-  }
+  public byte[] serial(@NonNull SerialCommand serialCommand,
+                       @NonNull final Packet packet) {
 
-  public <R> R deserialize(SerialCommand serialCommand, @NonNull final byte[] payload, @NonNull Class<R> clazz) {
-
-    if (serialCommand == JOSN) {
-      val jsonStr = new String(payload, StandardCharsets.UTF_8);
-      return JSONUtil.toBean(jsonStr, clazz);
+    val function = serialFunc.get(serialCommand);
+    if (Objects.isNull(function)) {
+      throw new IllegalAccessException(StrUtil.format("serial type:[] not supported", serialCommand.getCommand()));
     }
-
-    return null;
-
+    return function.apply(packet);
   }
+
+  public <T> T deSerial(@NonNull final byte[] payload,
+                        @NonNull final Class<T> clazz,
+                        @NonNull SerialCommand serialCommand) {
+    if (serialCommand == JOSN) {
+      return JSONUtil.toBean(new String(payload, StandardCharsets.UTF_8), clazz);
+    }
+    return null;
+  }
+
+  public static Codec instance() {
+    return INSTANCE;
+  }
+
+  private Codec() {
+    serialFunc.put(JOSN, packet -> JSONUtil.toJsonStr(packet).getBytes());
+  }
+
+
+  private static final Codec INSTANCE = new Codec();
+
+  private static final Map<SerialCommand, Function1<Packet, byte[]>> serialFunc = Maps.newConcurrentMap();
 
 
 }

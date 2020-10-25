@@ -8,10 +8,20 @@ import lombok.NonNull;
  */
 public enum SerialCommand {
 
-  JOSN(Byte.valueOf("1"), "json序列化");
+  JOSN(Byte.valueOf("1"), "json序列化"),
+  PROTOSTUFF(Byte.valueOf("2"), "protostuff序列化");
 
-  public static Byte defaultSerialCommandValue() {
-    return JOSN.getCommand();
+  public static SerialCommand defaultSerialCommandValue() {
+    return JOSN;
+  }
+
+  public static SerialCommand fetchSerialCommand(@NonNull Byte commandValue) {
+    for (SerialCommand serialCommand : SerialCommand.values()) {
+      if (serialCommand.getCommand().compareTo(commandValue) == 0) {
+        return serialCommand;
+      }
+    }
+    return null;
   }
 
   SerialCommand(@NonNull final Byte command, @NonNull final String desc) {

@@ -1,13 +1,16 @@
 package com.tank.time.server;
 
 import cn.hutool.core.util.StrUtil;
+import com.tank.share.util.MessageDecoder;
+import com.tank.share.util.MessageEncoder;
+import com.tank.share.util.PacketDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.logging.LoggingHandler;
 import lombok.NonNull;
 import lombok.val;
 
@@ -39,7 +42,10 @@ public class ServerCreator {
               @Override
               protected void initChannel(@NonNull final SocketChannel ch) throws Exception {
                 val pipeline = ch.pipeline();
-                pipeline.addLast(new StringDecoder());
+                pipeline.addLast(new MessageDecoder());
+                pipeline.addLast(new PacketDecoder());
+                pipeline.addLast(new LoggingHandler());
+                pipeline.addLast(new MessageEncoder());
               }
             });
 

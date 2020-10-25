@@ -1,5 +1,6 @@
 package com.tank.share.constants;
 
+import com.tank.share.protocol.ApiResult;
 import com.tank.share.protocol.LoginReq;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,7 +12,7 @@ import java.util.Optional;
  */
 public enum MessageType {
 
-  LOGIN_REQ(Short.valueOf("1"), LoginReq.class);
+  LOGIN_REQ(Byte.valueOf("1"), LoginReq.class), HELLO_RES(Byte.valueOf("2"), ApiResult.class);
 
   /**
    * fetched mapped clazz of target
@@ -19,7 +20,7 @@ public enum MessageType {
    * @param messageType
    * @return
    */
-  public static Optional<MessageType> fetchMessageType(@NonNull final Short messageType) {
+  public static Optional<MessageType> fetchMessageType(@NonNull final Byte messageType) {
     for (MessageType tmpMessageType : messageTypes) {
       if (tmpMessageType.type.compareTo(messageType) == 0) {
         return Optional.ofNullable(tmpMessageType);
@@ -34,7 +35,7 @@ public enum MessageType {
    * @param type
    * @param clazz
    */
-  MessageType(@NonNull final Short type,
+  MessageType(@NonNull final Byte type,
               @NonNull final Class clazz) {
     this.type = type;
     this.clazz = clazz;
@@ -43,7 +44,7 @@ public enum MessageType {
   private static MessageType[] messageTypes = MessageType.values();
 
   @Getter
-  private Short type;
+  private Byte type;
 
   @Getter
   private Class clazz;

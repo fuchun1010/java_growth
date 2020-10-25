@@ -8,15 +8,19 @@ import lombok.NonNull;
  */
 public enum SerialCommand {
 
-  JOSN(1, "json序列化");
+  JOSN(Byte.valueOf("1"), "json序列化");
 
-  SerialCommand(@NonNull final Integer command, @NonNull final String desc) {
+  public static Byte defaultSerialCommandValue() {
+    return JOSN.getCommand();
+  }
+
+  SerialCommand(@NonNull final Byte command, @NonNull final String desc) {
     this.command = command;
     this.desc = desc;
   }
 
   @Getter
-  private Integer command;
+  private Byte command;
 
   @Getter
   private String desc;

@@ -13,10 +13,10 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @NoArgsConstructor
-public class LoginReq implements ReqSerial {
+public class LoginReq implements Serial {
 
   @Override
-  public Short messageType() {
+  public Byte messageType() {
     return MessageType.LOGIN_REQ.getType();
   }
 

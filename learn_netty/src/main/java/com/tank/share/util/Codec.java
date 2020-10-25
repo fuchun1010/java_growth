@@ -28,7 +28,7 @@ public class Codec<T> {
       throw new IllegalAccessException(StrUtil.format(" [{}] serial not supported", serialCommand.getDesc()));
     }
     val result = serialFun.apply(data);
-    this.command.clear();
+    this.command.clear(); //save some memory
     return result;
   }
 

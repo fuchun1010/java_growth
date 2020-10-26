@@ -1,17 +1,11 @@
 package com.tank.share.util;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.google.common.collect.Maps;
 import com.tank.share.constants.SerialCommand;
-import io.vavr.Function1;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import lombok.val;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.Objects;
 
 import static com.tank.share.constants.SerialCommand.JOSN;
 
@@ -21,14 +15,13 @@ import static com.tank.share.constants.SerialCommand.JOSN;
 public class Codec {
 
   @SneakyThrows
-  public byte[] serial(@NonNull SerialCommand serialCommand,
-                       @NonNull final Packet packet) {
+  public <T> byte[] serial(@NonNull SerialCommand serialCommand,
+                           @NonNull final T data) {
 
-    val function = serialFunc.get(serialCommand);
-    if (Objects.isNull(function)) {
-      throw new IllegalAccessException(StrUtil.format("serial type:[] not supported", serialCommand.getCommand()));
+    if (serialCommand == JOSN) {
+      return JSONUtil.toJsonStr(data).getBytes();
     }
-    return function.apply(packet);
+    return null;
   }
 
   public <T> T deSerial(@NonNull final byte[] payload,
@@ -45,13 +38,8 @@ public class Codec {
   }
 
   private Codec() {
-    serialFunc.put(JOSN, packet -> JSONUtil.toJsonStr(packet).getBytes());
   }
 
-
   private static final Codec INSTANCE = new Codec();
-
-  private static final Map<SerialCommand, Function1<Packet, byte[]>> serialFunc = Maps.newConcurrentMap();
-
 
 }

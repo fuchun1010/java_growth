@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class MessageDecoder extends LengthFieldBasedFrameDecoder {
 
   public MessageDecoder() {
-    super(Integer.MAX_VALUE, 7, 4);
+    super(Integer.MAX_VALUE, 6, 4);
   }
 
   @Override

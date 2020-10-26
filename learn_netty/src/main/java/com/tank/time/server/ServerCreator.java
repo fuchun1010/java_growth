@@ -1,6 +1,7 @@
 package com.tank.time.server;
 
 import cn.hutool.core.util.StrUtil;
+import com.tank.share.util.Codec;
 import com.tank.share.util.MessageDecoder;
 import com.tank.share.util.MessageEncoder;
 import com.tank.share.util.PacketDecoder;
@@ -11,6 +12,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.AttributeKey;
 import lombok.NonNull;
 import lombok.val;
 
@@ -38,6 +40,7 @@ public class ServerCreator {
             .group(bossGroup, workerGroup)
             .channel(NioServerSocketChannel.class)
             .option(ChannelOption.SO_BACKLOG, 1024)
+            .attr(AttributeKey.valueOf("codeC"), Codec.instance())
             .childHandler(new ChannelInitializer<SocketChannel>() {
               @Override
               protected void initChannel(@NonNull final SocketChannel ch) throws Exception {

@@ -19,7 +19,6 @@ public class MessageEncoder extends MessageToByteEncoder<Packet> {
     buff.writeInt(MAGIC_NUMBER);
     buff.writeByte(VERSION);
     buff.writeByte(msg.getCommandType());
-    buff.writeByte(msg.getMessageType());
     buff.writeInt(msg.getDataLength());
     buff.writeBytes(msg.getData());
 

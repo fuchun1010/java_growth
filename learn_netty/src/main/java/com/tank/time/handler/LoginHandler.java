@@ -1,9 +1,8 @@
 package com.tank.time.handler;
 
-import com.tank.share.constants.MessageType;
-import com.tank.share.constants.SerialCommand;
 import com.tank.share.protocol.LoginReq;
-import com.tank.share.util.Packet;
+import com.tank.share.protocol.LoginRes;
+import com.tank.share.util.PacketUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.val;
@@ -19,14 +18,18 @@ public class LoginHandler extends SimpleChannelInboundHandler<LoginReq> {
     val password = msg.getPassword();
     val isOk = "jack".equalsIgnoreCase(username) && "123456".equalsIgnoreCase(password);
     if (isOk) {
-      val packet = new Packet();
-      packet.setMessageType(MessageType.HELLO_RES.getType());
-      packet.setData("hello,client".getBytes());
-      packet.setCommandType(SerialCommand.defaultSerialCommandValue().getCommand());
-      packet.setDataLength(packet.getData().length);
+      val loginRes = new LoginRes();
+      loginRes.setWords("hello,client");
+      val packet = PacketUtil.instance().toSimplePacket(loginRes);
       ctx.writeAndFlush(packet);
     } else {
       ctx.close();
     }
+  }
+
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    cause.printStackTrace();
+    ctx.close();
   }
 }

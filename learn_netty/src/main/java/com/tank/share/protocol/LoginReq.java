@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 public class LoginReq implements Serial {
 
   @Override
-  public Byte messageType() {
+  public Byte commandType() {
     return MessageType.LOGIN_REQ.getType();
   }
 

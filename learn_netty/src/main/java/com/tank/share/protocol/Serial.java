@@ -5,5 +5,5 @@ package com.tank.share.protocol;
  */
 public interface Serial {
 
-  Byte messageType();
+  Byte commandType();
 }

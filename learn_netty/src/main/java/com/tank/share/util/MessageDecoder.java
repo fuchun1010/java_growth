@@ -18,7 +18,7 @@ public class MessageDecoder extends LengthFieldBasedFrameDecoder {
   }
 
   @Override
-  protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+  public Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
     val isNotSystemMessage = in.getInt(in.readerIndex()) != TimeServerConstants.MAGIC_NUMBER;
     if (isNotSystemMessage) {
       logger.info("reject illegal message");

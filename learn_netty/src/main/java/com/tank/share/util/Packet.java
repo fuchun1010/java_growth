@@ -13,7 +13,7 @@ import static io.netty.handler.codec.memcache.binary.BinaryMemcacheOpcodes.VERSI
 @Getter
 @Setter
 public final class Packet {
-  //magic number(int -> 4) + version(byte -> 1)  + messageType number(byte -> 1) + data length(int -> 4) + data (bytes)
+  //magic number(int -> 4) + version(byte -> 1)  + commandType number(byte -> 1) + data length(int -> 4) + data (bytes)
 
   @Setter(AccessLevel.PRIVATE)
   private int magic = MAGIC_NUMBER;

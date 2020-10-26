@@ -5,13 +5,13 @@ import com.tank.share.util.Codec;
 import com.tank.share.util.MessageDecoder;
 import com.tank.share.util.MessageEncoder;
 import com.tank.share.util.PacketDecoder;
+import com.tank.time.handler.server.LoginReqHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.AttributeKey;
 import lombok.NonNull;
 import lombok.val;
@@ -47,8 +47,9 @@ public class ServerCreator {
                 val pipeline = ch.pipeline();
                 pipeline.addLast(new MessageDecoder());
                 pipeline.addLast(new PacketDecoder());
-                pipeline.addLast(new LoggingHandler());
                 pipeline.addLast(new MessageEncoder());
+                pipeline.addLast(new LoginReqHandler());
+
               }
             });
 

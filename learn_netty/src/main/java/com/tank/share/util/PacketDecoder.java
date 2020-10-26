@@ -18,17 +18,16 @@ public class PacketDecoder extends ByteToMessageDecoder {
   @SuppressWarnings("unchecked")
   protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
     //skip magic and version field
+    //magic number(int -> 4) + version(byte -> 1)  + commandType number(byte -> 1) + data length(int -> 4) + data (bytes)
     in.skipBytes(5);
 
     val command = in.readByte();
-    //skip messageType
-    in.skipBytes(1);
     val dataLength = in.readInt();
     val data = new byte[dataLength];
 
     val opt = MessageType.fetchMessageType(command);
     if (opt.isPresent()) {
-      in.writeBytes(data);
+      in.readBytes(data);
       val message = opt.get();
       val bean = codec.deSerial(data, message.getClazz(), SerialCommand.fetchSerialCommand(command));
       out.add(bean);

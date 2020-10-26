@@ -15,17 +15,16 @@ import static io.netty.handler.codec.memcache.binary.BinaryMemcacheOpcodes.VERSI
 public class MessageEncoder extends MessageToByteEncoder<Packet> {
   @Override
   protected void encode(ChannelHandlerContext ctx, Packet msg, ByteBuf out) throws Exception {
-    val buff = Unpooled.buffer();
+    val fixedSize = 10 + msg.getData().length;
+    val buff = Unpooled.buffer(fixedSize);
     buff.writeInt(MAGIC_NUMBER);
     buff.writeByte(VERSION);
     buff.writeByte(msg.getCommandType());
     buff.writeInt(msg.getDataLength());
     buff.writeBytes(msg.getData());
-
-    byte[] result = new byte[buff.readableBytes()];
-    buff.writeBytes(result);
-    out.writeBytes(result);
-
+    byte[] data = buff.array();
+    out.writeBytes(data);
+    buff.release();
 
   }
 }

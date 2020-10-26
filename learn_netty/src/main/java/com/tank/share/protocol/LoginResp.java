@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class LoginRes implements Serial {
+public class LoginResp implements Serial {
 
   @Override
   public Byte commandType() {

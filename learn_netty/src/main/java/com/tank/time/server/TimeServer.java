@@ -6,7 +6,9 @@ package com.tank.time.server;
 public final class TimeServer {
 
   public static void main(String[] args) {
-    ServerCreator.creatorInstance().start(9600);
+    ServerCreator.creatorInstance().start(PORT);
   }
+
+  public static final Integer PORT = 9600;
 
 }

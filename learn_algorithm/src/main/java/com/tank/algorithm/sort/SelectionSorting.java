@@ -1,16 +1,17 @@
 package com.tank.algorithm.sort;
 
 import cn.hutool.core.util.StrUtil;
+import lombok.NonNull;
 
 import java.util.Arrays;
 
 /**
  * @author tank198435163.com
  */
-public class SelectionSorting {
+public final class SelectionSorting<T extends Comparable<T>> {
 
-  public int[] sort(int[] source) {
-    int[] target = Arrays.copyOfRange(source, 0, source.length);
+  public T[] sort(@NonNull final T[] source) {
+    final T[] target = Arrays.copyOfRange(source, 0, source.length);
     int arrLength = target.length - 1;
 
     for (int i = 0; i < arrLength; i++) {
@@ -18,12 +19,12 @@ public class SelectionSorting {
       int minIndex = i;
 
       for (int j = i + 1; j < target.length; j++) {
-        if (target[minIndex] > target[j]) {
+        if (target[minIndex].compareTo(target[j]) > 0) {
           minIndex = j;
         }
       }
 
-      int tmp = target[i];
+      final T tmp = target[i];
       target[i] = target[minIndex];
       target[minIndex] = tmp;
 

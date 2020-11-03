@@ -35,8 +35,8 @@ public class ServerCreator {
 
     val bossGroup = new NioEventLoopGroup();
     val workerGroup = new NioEventLoopGroup();
-    val bootStrap = new ServerBootstrap();
-    val channelFuture = bootStrap
+    val serverBootStrap = new ServerBootstrap();
+    val channelFuture = serverBootStrap
             .group(bossGroup, workerGroup)
             .channel(NioServerSocketChannel.class)
             .option(ChannelOption.SO_BACKLOG, 1024)

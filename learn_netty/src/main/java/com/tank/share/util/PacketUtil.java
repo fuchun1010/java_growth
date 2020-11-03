@@ -1,6 +1,7 @@
 package com.tank.share.util;
 
 import cn.hutool.core.util.ReflectUtil;
+import com.tank.share.protocol.Serial;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -13,7 +14,7 @@ import static com.tank.share.constants.SerialCommand.defaultSerialCommandValue;
 public class PacketUtil {
 
   @SneakyThrows
-  public <T> Packet toSimplePacket(@NonNull final T data) {
+  public <T extends Serial> Packet toSimplePacket(@NonNull final T data) {
     val packet = new Packet();
     val method = ReflectUtil.getMethodByName(data.getClass(), "commandType");
     final Byte command = ((Byte) method.invoke(data));

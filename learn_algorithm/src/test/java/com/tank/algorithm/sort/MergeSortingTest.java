@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MergeSortingTest {
 
@@ -39,6 +41,27 @@ public class MergeSortingTest {
     int[] expected = {1, 2, 3, 4, 5};
     int[] result = this.merge(new int[]{1, 3}, new int[]{2, 4, 5});
     Assert.assertEquals(expected, result);
+  }
+
+
+  @Test
+  public void testTryFinally() {
+    AtomicBoolean running = new AtomicBoolean(true);
+    int counter = 0;
+    try {
+      while (running.get()) {
+        counter++;
+        TimeUnit.MILLISECONDS.sleep(10);
+        if (counter == 100) {
+          throw new Exception("xxx");
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      running.set(false);
+      System.out.println("exit");
+    }
   }
 
 

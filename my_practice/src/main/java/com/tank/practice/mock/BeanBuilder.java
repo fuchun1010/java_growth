@@ -44,12 +44,12 @@ class BeanBuilder {
   private void initFactory() {
     for (Object key : props.keySet()) {
       val id = key.toString();
-      String lowerId = id.toLowerCase();
+      val lowerId = id.toLowerCase();
       if (factory.containsKey(lowerId)) {
         continue;
       }
       val classFullName = props.getProperty(id);
-      Object instance = Class.forName(classFullName).newInstance();
+      val instance = Class.forName(classFullName).newInstance();
       this.factory.putIfAbsent(lowerId, instance);
     }
   }

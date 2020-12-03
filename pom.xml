@@ -101,5 +101,6 @@
         <module>learn_algorithm</module>
     <module>data_processor</module>
     <module>my_practice</module>
+    <module>learn_cache</module>
   </modules>
 </project>

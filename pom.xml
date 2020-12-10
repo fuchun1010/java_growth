@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tank.clazz</groupId>
     <artifactId>java_growth</artifactId>
@@ -88,7 +89,13 @@
                 <version>${netty.version}</version>
                 <type>jar</type>
             </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>3.0.1</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <modules>
@@ -99,8 +106,15 @@
         <module>learn_netty</module>
         <module>learn_dp</module>
         <module>learn_algorithm</module>
-    <module>data_processor</module>
-    <module>my_practice</module>
-    <module>learn_cache</module>
-  </modules>
+        <module>data_processor</module>
+        <module>my_practice</module>
+        <module>learn_cache</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
 </project>

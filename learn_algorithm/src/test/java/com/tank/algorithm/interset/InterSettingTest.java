@@ -42,8 +42,13 @@ public class InterSettingTest {
     val resultWrapper = InterSetting.inner(left, right);
 
     Assert.assertNotNull(resultWrapper);
-    val result = resultWrapper.iterator().hasNext() ? resultWrapper.iterator().next(): Sets.<Person>newHashSet();
+    val result = resultWrapper.iterator().hasNext() ? resultWrapper.iterator().next() : Sets.<Person>newHashSet();
     Assert.assertEquals(2, result.size());
+
+  }
+
+  @Test
+  public void parallelInterSetting() {
 
   }
 

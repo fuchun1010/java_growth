@@ -5,6 +5,6 @@ package com.tank.algorithm;
  */
 public class AlgorithmApp {
   public static void main(String[] args) {
-    System.out.println("AlgorithmApp");
+    System.out.println("args = " + (1 << 6));
   }
 }

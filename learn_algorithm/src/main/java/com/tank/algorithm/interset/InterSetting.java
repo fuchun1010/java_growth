@@ -39,5 +39,11 @@ public class InterSetting {
     return Sets.intersection(leftSet, rightSet);
   }
 
+  public <T> Set<T> differ(@NonNull final Collection<T> left, @NonNull final Collection<T> right) {
+    val leftSet = new HashSet<>(left);
+    val rightSet = new HashSet<>(right);
+    return Sets.difference(leftSet, rightSet);
+  }
+
 
 }

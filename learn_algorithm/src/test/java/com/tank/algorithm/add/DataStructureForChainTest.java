@@ -44,6 +44,14 @@ public class DataStructureForChainTest {
     });
   }
 
+  @Test
+  public void deleteHeadTest() {
+    this.processChain(chain -> {
+      chain.deleteHead();
+      Assert.assertEquals(chain.size(), 2);
+    });
+  }
+
   private void processChain(@NonNull final Consumer<DataStructureForChain<Integer>> chainConsumer) {
     this.chain = new DataStructureForChain<>();
     this.chain.addNode(1).addNode(2).addNode(3);

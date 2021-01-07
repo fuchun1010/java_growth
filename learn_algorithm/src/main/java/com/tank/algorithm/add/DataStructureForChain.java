@@ -1,10 +1,7 @@
 package com.tank.algorithm.add;
 
 import cn.hutool.core.util.StrUtil;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.val;
+import lombok.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -75,6 +72,25 @@ public class DataStructureForChain<T> {
 
   public int size() {
     return this.counter.get();
+  }
+
+  @SneakyThrows({IllegalAccessException.class})
+  public T deleteHead() {
+    counter.decrementAndGet();
+    Node<T> nextNode = head.next;
+    if (nextNode == null) {
+      throw new IllegalAccessException("can't access empty data");
+    }
+    if (nextNode.next != null) {
+      head.next = nextNode.next;
+      nextNode.next.pre = head;
+      nextNode.next = null;
+      nextNode.pre = null;
+    } else {
+      head.next.pre = null;
+      head.next = null;
+    }
+    return nextNode.data;
   }
 
   private Node<T> obtainHead() {

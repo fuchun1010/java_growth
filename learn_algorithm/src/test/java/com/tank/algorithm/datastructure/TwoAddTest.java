@@ -1,4 +1,4 @@
-package com.tank.algorithm.add;
+package com.tank.algorithm.datastructure;
 
 import lombok.val;
 import org.junit.Assert;

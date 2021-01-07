@@ -1,4 +1,4 @@
-package com.tank.algorithm.add;
+package com.tank.algorithm.datastructure;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.*;
@@ -93,8 +93,21 @@ public class DataStructureForChain<T> {
     return nextNode.data;
   }
 
+  public T deletedTail() {
+    counter.decrementAndGet();
+    val lastNode = this.obtainTail();
+    val preNode = lastNode.pre;
+    preNode.next = null;
+    lastNode.pre = null;
+    return lastNode.data;
+  }
+
   private Node<T> obtainHead() {
     return this.head;
+  }
+
+  private Node<T> obtainTail() {
+    return this.tail;
   }
 
   @Getter

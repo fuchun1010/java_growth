@@ -1,4 +1,4 @@
-package com.tank.algorithm.add;
+package com.tank.algorithm.datastructure;
 
 import com.google.common.base.Preconditions;
 import lombok.NonNull;

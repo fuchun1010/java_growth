@@ -1,11 +1,12 @@
 package com.tank.algorithm.date;
 
-import org.junit.Test;
 
-public class LunarSolarConverterTest {
+import org.junit.jupiter.api.Test;
+
+class LunarSolarConverterTest {
 
   @Test
-  public void lunarToSolar() {
+  void lunarToSolar() {
     Lunar lunar = new Lunar();
     lunar.setIsleap(false);
     lunar.setLunarDay(30);

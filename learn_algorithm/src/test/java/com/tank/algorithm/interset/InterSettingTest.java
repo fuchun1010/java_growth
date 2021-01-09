@@ -3,11 +3,13 @@ package com.tank.algorithm.interset;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import lombok.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author tank198435163.com
@@ -21,15 +23,15 @@ public class InterSettingTest {
     val p3 = new Person("caocao", 51);
     val persons = Arrays.asList(p1, p2, p3);
     val result = InterSetting.splitBuckets(persons, Person.class);
-    Assert.assertNotNull(result);
-    Assert.assertEquals(2, result.size());
+    assertNotNull(result);
+    assertEquals(2, result.size());
     val segment1 = result.poll();
-    Assert.assertNotNull(segment1);
-    Assert.assertEquals(2, segment1.size());
+    assertNotNull(segment1);
+    assertEquals(2, segment1.size());
   }
 
   @Test
-  public void innerTest() {
+  void innerTest() {
     val p1 = new Person("lisi", 44);
     val p2 = new Person("wangwu", 14);
     val p3 = new Person("caocao", 51);
@@ -41,14 +43,14 @@ public class InterSettingTest {
 
     val resultWrapper = InterSetting.inner(left, right);
 
-    Assert.assertNotNull(resultWrapper);
+    assertNotNull(resultWrapper);
     val result = resultWrapper.iterator().hasNext() ? resultWrapper.iterator().next() : Sets.<Person>newHashSet();
-    Assert.assertEquals(2, result.size());
+    assertEquals(2, result.size());
 
   }
 
   @Test
-  public void parallelInterSetting() {
+  void parallelInterSetting() {
 
   }
 

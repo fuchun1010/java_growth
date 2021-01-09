@@ -1,25 +1,27 @@
 package com.tank.algorithm.datastructure;
 
 import lombok.val;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TwoAddTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+class TwoAddTest {
 
   @Test
-  public void testAddTwoSuccess() {
+  void testAddTwoSuccess() {
     val result = this.two.differIndex(this.target, 9);
-    Assert.assertNotNull(result);
-    Assert.assertEquals(1, result[0]);
-    Assert.assertEquals(3, result[1]);
+    assertNotNull(result);
+    assertEquals(1, result[0]);
+    assertEquals(3, result[1]);
   }
 
   @Test
-  public void testAddTowFailure() {
+  void testAddTowFailure() {
     val result = this.two.differIndex(this.target, 16);
-    Assert.assertNotNull(result);
-    Assert.assertEquals(0, result[0]);
-    Assert.assertEquals(0, result[1]);
+    assertNotNull(result);
+    assertEquals(0, result[0]);
+    assertEquals(0, result[1]);
   }
 
 

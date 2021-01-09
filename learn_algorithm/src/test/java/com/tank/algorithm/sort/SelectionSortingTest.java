@@ -1,20 +1,21 @@
 package com.tank.algorithm.sort;
 
 import lombok.val;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author tank198435163.com
  */
-public class SelectionSortingTest {
+class SelectionSortingTest {
 
   @Test
-  public void testSort() {
+  void testSort() {
     val selectionSort = new SelectionSorting<Integer>();
     Integer[] target = {29, 10, 14, 37, 20, 25, 44, 15};
     Integer[] result = selectionSort.sort(target);
-    Assert.assertEquals(result[0].intValue(), 10);
+    assertEquals(result[0].intValue(), 10);
   }
 
 }

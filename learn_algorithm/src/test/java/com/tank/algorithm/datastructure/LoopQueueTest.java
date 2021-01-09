@@ -1,27 +1,23 @@
 package com.tank.algorithm.datastructure;
 
 import lombok.val;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-public class LoopQueueTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+class LoopQueueTest {
 
   @Test
-  public void enQueue() {
+  void enQueue() {
     IntStream.rangeClosed(1, 7).boxed().forEach(this.queue::enQueue);
     val result = this.queue.deQueue();
-    Assert.assertNotNull(result);
-    Assert.assertEquals(1, (int) result);
-  }
-  
-
-  @Before
-  public void initialize() {
-    this.queue = new LoopQueue<>(Integer.class);
+    assertNotNull(result);
+    assertEquals(1, (int) result);
   }
 
-  private LoopQueue<Integer> queue;
+
+  private final LoopQueue<Integer> queue = new LoopQueue<>(Integer.class);
 }

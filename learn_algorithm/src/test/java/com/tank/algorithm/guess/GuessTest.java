@@ -2,20 +2,21 @@ package com.tank.algorithm.guess;
 
 import com.google.common.collect.Sets;
 import lombok.val;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author tank198435163.com
  */
-public class GuessTest {
+class GuessTest {
 
   @Test
-  public void testMerge() {
+  void testMerge() {
     val users = Sets.newHashSet("jack", "john");
     val tmpUsers = Sets.newHashSet("jack");
     users.addAll(tmpUsers);
-    Assert.assertEquals(users.size(), 2);
+    assertEquals(users.size(), 2);
   }
 
 }

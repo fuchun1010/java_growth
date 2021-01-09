@@ -3,49 +3,43 @@ package com.tank.algorithm.sort;
 import lombok.NonNull;
 import lombok.val;
 import lombok.var;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MergeSortingTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class MergeSortingTest {
 
   @Test
-  public void testDiv() {
+  void testDiv() {
     val a = 9;
     val b = 2;
-    Assert.assertEquals(a / b, 4);
+    assertEquals(a / b, 4);
   }
 
 
   @Test
-  public void testMergeSort() {
+  void testMergeSort() {
     final int[] arr = {3, 1, 2, 7, 5};
     final int[] result = this.mergeSorting2.sort(arr);
     final int[] expected = new int[]{1, 2, 3, 5, 7};
-    Assert.assertEquals(result, expected);
-  }
-
-  @Before
-  public void init() {
-    this.mergeSorting = new MergeSorting();
-    this.mergeSorting2 = new MergeSorting();
+    assertEquals(result, expected);
   }
 
 
   @Test
-  public void testMerge() {
+  void testMerge() {
     int[] expected = {1, 2, 3, 4, 5};
     int[] result = this.merge(new int[]{1, 3}, new int[]{2, 4, 5});
-    Assert.assertEquals(expected, result);
+    assertEquals(expected, result);
   }
 
 
   @Test
-  public void testTryFinally() {
+  void testTryFinally() {
     AtomicBoolean running = new AtomicBoolean(true);
     int counter = 0;
     try {
@@ -100,8 +94,8 @@ public class MergeSortingTest {
   }
 
 
-  private MergeSorting mergeSorting;
+  private final MergeSorting mergeSorting = new MergeSorting();
 
-  private MergeSorting mergeSorting2;
+  private final MergeSorting mergeSorting2 = new MergeSorting();
 
 }

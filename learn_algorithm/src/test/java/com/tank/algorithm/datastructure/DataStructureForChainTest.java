@@ -1,54 +1,55 @@
 package com.tank.algorithm.datastructure;
 
 import lombok.NonNull;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author tank198435163.com
  */
-public class DataStructureForChainTest {
+class DataStructureForChainTest {
 
 
   @Test
-  public void sizeTest() {
+  void sizeTest() {
     this.chain = new DataStructureForChain<>();
     this.chain.addNode(1).addNode(2).addNode(3);
     int size = this.chain.size();
-    Assert.assertEquals(size, 3);
+    assertEquals(size, 3);
   }
 
   @Test
-  public void deletedNodeInMiddleTest() {
+  void deletedNodeInMiddleTest() {
     this.processChain(chain -> {
       chain.deletedNode(2);
-      Assert.assertEquals(this.chain.size(), 2);
+      assertEquals(this.chain.size(), 2);
     });
   }
 
   @Test
-  public void deletedNodeHeadTest() {
+  void deletedNodeHeadTest() {
     this.processChain(chain -> {
       chain.deletedNode(1);
-      Assert.assertEquals(chain.size(), 2);
+      assertEquals(chain.size(), 2);
     });
   }
 
   @Test
-  public void deletedNodeTailTest() {
+  void deletedNodeTailTest() {
     this.processChain(chain -> {
       chain.deletedNode(3);
-      Assert.assertEquals(chain.size(), 2);
+      assertEquals(chain.size(), 2);
     });
   }
 
   @Test
-  public void deleteHeadTest() {
+  void deleteHeadTest() {
     this.processChain(chain -> {
       chain.deleteHead();
-      Assert.assertEquals(chain.size(), 2);
+      assertEquals(chain.size(), 2);
     });
   }
 
@@ -56,7 +57,7 @@ public class DataStructureForChainTest {
     this.chain = new DataStructureForChain<>();
     this.chain.addNode(1).addNode(2).addNode(3);
     chainConsumer.accept(this.chain);
-    Assert.assertNotNull(this.chain);
+    assertNotNull(this.chain);
     this.chain.print();
   }
 

@@ -3,6 +3,7 @@ package com.tank.algorithm.datastructure;
 import lombok.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @param <T>
@@ -11,15 +12,15 @@ import java.util.List;
 public class DataStructureForTree<T> {
 
   @SneakyThrows
-  public Node<T> createBinaryNode(@NonNull final List<T> inputs) {
+  public TreeNode<T> createBinaryNode(@NonNull final List<T> inputs) {
     if (inputs.isEmpty()) {
       return null;
     }
-    Node<T> node = null;
+    TreeNode<T> node = null;
     val data = inputs.remove(0);
 
     if (data != null) {
-      node = new Node<>(data);
+      node = new TreeNode<>(data);
       node.left = this.createBinaryNode(inputs);
       node.right = this.createBinaryNode(inputs);
     }
@@ -29,19 +30,46 @@ public class DataStructureForTree<T> {
   }
 
 
+  public void preOrder(final TreeNode<T> root) {
+    if (Objects.isNull(root)) {
+      return;
+    }
+    System.out.println(root.data);
+    this.preOrder(root.left);
+    this.preOrder(root.right);
+  }
+
+  public void middleOrderTraversal(final TreeNode<T> root) {
+    if (Objects.isNull(root)) {
+      return;
+    }
+    this.middleOrderTraversal(root.left);
+    System.out.println(root.data);
+    this.middleOrderTraversal(root.right);
+  }
+
+  public void postOrderTraversal(final TreeNode<T> root) {
+    if (Objects.isNull(root)) {
+      return;
+    }
+    this.postOrderTraversal(root.left);
+    this.postOrderTraversal(root.right);
+    System.out.println(root.data);
+  }
+
   @Getter
   @Setter
-  public static class Node<T> {
+  public static class TreeNode<T> {
 
-    public Node(@NonNull final T data) {
+    public TreeNode(@NonNull final T data) {
       this.data = data;
     }
 
-    private Node<T> left;
+    private TreeNode<T> left;
 
     private T data;
 
-    private Node<T> right;
+    private TreeNode<T> right;
   }
 
   private String sayHello() {

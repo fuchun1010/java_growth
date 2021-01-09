@@ -1,11 +1,10 @@
 package com.tank.algorithm.datastructure;
 
-import com.alibaba.testable.core.accessor.PrivateAccessor;
 import com.alibaba.testable.processor.annotation.EnablePrivateAccess;
 import com.google.common.collect.Lists;
 import io.vavr.collection.Stream;
 import lombok.val;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,18 +17,39 @@ class DataStructureForTreeTest {
 
   @Test
   void createBinaryNodeTest() {
-    val list = Lists.<Integer>newLinkedList();
-    Stream.of(2, 1, 7, 4).forEach(list::add);
-    val node = tree.createBinaryNode(list);
-    assertNotNull(node);
+    assertNotNull(this.root);
+    assertNotNull(this.root.getLeft());
+  }
+
+
+  @Test
+  void preOrderTraversalTest() {
+    this.tree.preOrder(this.root);
+    assertNotNull(this.root);
   }
 
   @Test
-  void testSayHello() {
-    val result = PrivateAccessor.invoke(this.tree, "sayHello");
-    Assertions.assertEquals("hello", result);
+  void middleOrderTraversalTest() {
+    this.tree.middleOrderTraversal(this.root);
+    assertNotNull(this.root);
   }
 
-  private DataStructureForTree<Integer> tree = new DataStructureForTree<Integer>();
+  @Test
+  void postOrderTraversalTest() {
+    this.tree.postOrderTraversal(this.root);
+    assertNotNull(this.root);
+  }
+
+  @BeforeEach
+  void initializerRoot() {
+    this.tree = new DataStructureForTree<>();
+    val list = Lists.<Integer>newLinkedList();
+    Stream.of(3, 2, 9, null, null, 10, null, null, 8, null, 4).forEach(list::add);
+    this.root = this.tree.createBinaryNode(list);
+  }
+
+  private DataStructureForTree<Integer> tree;
+
+  private DataStructureForTree.TreeNode<Integer> root;
 
 }

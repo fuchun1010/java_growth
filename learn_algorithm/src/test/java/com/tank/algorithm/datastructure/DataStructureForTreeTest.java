@@ -4,6 +4,7 @@ import com.alibaba.testable.processor.annotation.EnablePrivateAccess;
 import com.google.common.collect.Lists;
 import io.vavr.collection.Stream;
 import lombok.val;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,18 @@ class DataStructureForTreeTest {
     assertNotNull(this.root);
   }
 
+  @Test
+  void printWithStackTest() {
+    this.tree.printWithStack(this.root);
+    Assertions.assertNotNull(this.tree);
+  }
+
+  @Test
+  void traversalByStackTest() {
+    Assertions.assertNotNull(this.tree);
+    this.tree.printWithStack(this.root);
+  }
+
   @BeforeEach
   void initializerRoot() {
     this.tree = new DataStructureForTree<>();
@@ -50,6 +63,6 @@ class DataStructureForTreeTest {
 
   private DataStructureForTree<Integer> tree;
 
-  private DataStructureForTree.TreeNode<Integer> root;
+  private DataStructureForTree.SimpleTreeNode<Integer> root;
 
 }

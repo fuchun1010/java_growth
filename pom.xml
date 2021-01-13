@@ -105,7 +105,6 @@
         <module>learn_nio</module>
         <module>learn_netty</module>
         <module>learn_dp</module>
-        <module>learn_algorithm</module>
         <module>data_processor</module>
         <module>my_practice</module>
         <module>learn_cache</module>
